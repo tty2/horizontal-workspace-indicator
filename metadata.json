@@ -1,0 +1,8 @@
+{
+    "description": "Workspace indicator shows the amount of opened workspaces and the current one",
+    "name": "Workspace indicator",
+    "shell-version": ["3.38.1"],
+    "url": "",
+    "uuid": "horizontal-workspace-indicator@gmail.com",
+    "version": "0.0.1"
+}
