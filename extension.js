@@ -13,12 +13,12 @@ let WorkspaceIndicator = GObject.registerClass(
         _init() {
             super._init(0.0, _('Workspace Indicator'));
             
-            let container = new St.Widget({
+            this._container = new St.Widget({
                 layout_manager: new Clutter.BinLayout(),
                 x_expand: true,
                 y_expand: true,
             });
-            this.add_actor(container);
+            this.add_actor(this._container);
             
             this._statusLabel = new St.Label({
                 style_class: "panel-button-text",
@@ -26,7 +26,7 @@ let WorkspaceIndicator = GObject.registerClass(
                 x_expand: true,
                 y_align: Clutter.ActorAlign.CENTER,
             });
-            container.add_actor(this._statusLabel);
+            this._container.add_actor(this._statusLabel);
 
             let workspaceManager = global.workspace_manager;
             this._workspaceManagerSignals = [
@@ -39,6 +39,8 @@ let WorkspaceIndicator = GObject.registerClass(
         }
 
         _onDestroy() {
+            for (let i = 0; i < this._workspaceManagerSignals.length; i++)
+                global.workspace_manager.disconnect(this._workspaceManagerSignals[i])
             super._onDestroy();
         }
 
