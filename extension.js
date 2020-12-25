@@ -31,9 +31,9 @@ let WorkspaceIndicator = GObject.registerClass(
             let workspaceManager = global.workspace_manager;
             this._workspaceManagerSignals = [
                 workspaceManager.connect_after('notify::n-workspaces',
-                    this._nWorkspacesChanged.bind(this)),
+                    this._updateView.bind(this)),
                 workspaceManager.connect_after('workspace-switched',
-                    this._onWorkspaceSwitched.bind(this)),
+                    this._updateView.bind(this)),
             ];
 
         }
@@ -44,11 +44,7 @@ let WorkspaceIndicator = GObject.registerClass(
             super._onDestroy();
         }
 
-        _onWorkspaceSwitched() {
-            this._statusLabel.text = getWidgetText();
-        }
-    
-        _nWorkspacesChanged() {
+        _updateView() {
             this._statusLabel.text = getWidgetText();
         }
     }
