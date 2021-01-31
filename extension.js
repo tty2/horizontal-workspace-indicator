@@ -5,6 +5,8 @@ const PanelMenu = imports.ui.panelMenu;
 
 const bullet = "●";
 const circle = "○";
+const leftButton = 1;
+const rightButton = 3;
 
 let _indicator;
 
@@ -36,6 +38,8 @@ let WorkspaceIndicator = GObject.registerClass(
                     this._updateView.bind(this)),
             ];
 
+            this.connect('button-press-event', this._onButtonPress)
+
         }
 
         _onDestroy() {
@@ -46,6 +50,24 @@ let WorkspaceIndicator = GObject.registerClass(
 
         _updateView() {
             this._statusLabel.text = getWidgetText();
+        }
+
+        _onButtonPress(actor, event) {
+            let workspaceManager = global.workspace_manager;
+            let activeWorkspaceIndex = workspaceManager.get_active_workspace_index();
+            let button = event.get_button();
+
+            if (button == leftButton) {
+                if (activeWorkspaceIndex == 0) {
+                    return
+                }
+                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex-1))
+            } else if (button == rightButton) {
+                if (activeWorkspaceIndex == workspaceManager.get_n_workspaces()-1) {
+                    return
+                }
+                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex+1))
+            }
         }
     }
 );
