@@ -58,7 +58,7 @@ let WorkspaceIndicator = GObject.registerClass(
                     Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex-1))
                     break;
                 case Clutter.ScrollDirection.DOWN:
-                    if (activeWorkspaceIndex == workspaceManager.get_n_workspaces()) {
+                    if (activeWorkspaceIndex == workspaceManager.get_n_workspaces()-1) {
                         return
                     }
                     Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex+1))
