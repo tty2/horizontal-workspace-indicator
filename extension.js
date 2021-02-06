@@ -19,6 +19,7 @@ let WorkspaceIndicator = GObject.registerClass(
                 layout_manager: new Clutter.BinLayout(),
                 x_expand: true,
                 y_expand: true,
+                style_class: "widget",
             });
             this.add_actor(this._container);
             
@@ -38,8 +39,7 @@ let WorkspaceIndicator = GObject.registerClass(
                     this._updateView.bind(this)),
             ];
 
-            this.connect('button-press-event', this._onButtonPress)
-
+            this.connect('button-press-event', this._onButtonPress);
         }
 
         _onDestroy() {
@@ -61,12 +61,12 @@ let WorkspaceIndicator = GObject.registerClass(
                 if (activeWorkspaceIndex == 0) {
                     return
                 }
-                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex-1))
+                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex-1));
             } else if (button == rightButton) {
                 if (activeWorkspaceIndex == workspaceManager.get_n_workspaces()-1) {
                     return
                 }
-                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex+1))
+                Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex+1));
             }
         }
     }
