@@ -1,4 +1,4 @@
-const { Clutter, St, GObject } = imports.gi;
+const { Clutter, St, GObject, Pango } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 
@@ -25,10 +25,14 @@ let WorkspaceIndicator = GObject.registerClass(
             
             this._statusLabel = new St.Label({
                 style_class: "panel-button-text",
-                text: getWidgetText(),
+                text: this.getWidgetText(),
                 x_expand: true,
+                y_expand: true,
                 y_align: Clutter.ActorAlign.CENTER,
             });
+            this._statusLabel.clutter_text.line_wrap = true;
+            this._statusLabel.clutter_text.line_wrap_mode = Pango.WrapMode.CHAR;
+            this._statusLabel.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
             this._container.add_actor(this._statusLabel);
 
             let workspaceManager = global.workspace_manager;
@@ -49,7 +53,7 @@ let WorkspaceIndicator = GObject.registerClass(
         }
 
         _updateView() {
-            this._statusLabel.text = getWidgetText();
+            this._statusLabel.text = this.getWidgetText();
         }
 
         _onButtonPress(actor, event) {
@@ -74,6 +78,35 @@ let WorkspaceIndicator = GObject.registerClass(
                     Main.overview.show();
                 }
             }
+        }
+
+        isHorizontal() {
+            let settings = ExtensionUtils.getSettings();
+            let orientation = settings.get_string("widget-orientation");
+            return orientation != 'vertical';
+        }
+
+        getWidgetText() {
+            let txt = "";
+            let numberWorkspaces = global.workspace_manager.get_n_workspaces();
+            let currentWorkspaceIndex = global.workspace_manager.get_active_workspace_index();
+            let separator;
+
+            if (this.isHorizontal()) {
+                separator = "";
+            } else {
+                separator = "\n";
+            }
+
+            for (let i = 0; i < numberWorkspaces; i++) {
+                if (i == currentWorkspaceIndex) {
+                    txt += bullet;
+                } else {
+                    txt += circle;
+                }
+                txt += separator;
+            }
+            return txt
         }
     }
 );
@@ -103,20 +136,6 @@ function getWidgetIndex(position) {
     } 
 
     return 1
-}
-
-function getWidgetText() {
-    let txt = "";
-    let numberWorkspaces = global.workspace_manager.get_n_workspaces();
-    let currentWorkspaceIndex = global.workspace_manager.get_active_workspace_index();
-    for (let i = 0; i < numberWorkspaces; i++) {
-        if (i == currentWorkspaceIndex) {
-            txt += bullet;
-        } else {
-            txt += circle;
-        }
-    }
-    return txt
 }
 
 function init(meta) {

@@ -11,5 +11,14 @@
       <summary>Widget position</summary>
       <description>This specifies the position of widget on the left, center or right of top panel.</description>
     </key>
+    <key name="widget-orientation" type="s">
+      <choices>
+        <choice value="horizontal"/>
+        <choice value="vertical"/>
+      </choices>
+      <default>'horizontal'</default>
+      <summary>Widget orientation</summary>
+      <description>This specifies the orientation of the dots in the widget, horizontal or vertical (for vertical panels).</description>
+    </key>
   </schema>
 </schemalist>
