@@ -2,18 +2,15 @@ const { Clutter, St, GObject } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 
-
 const bullet = "●";
 const circle = "○";
 const leftButton = 1;
 const rightButton = 3;
 
-let _indicator;
-
 let WorkspaceIndicator = GObject.registerClass(
     class WorkspaceIndicator extends PanelMenu.Button {
         _init() {
-            super._init(0.0, _('Workspace Indicator'));
+            super._init(0.0, _('Horizontal workspace indicator'));
             
             this._container = new St.Widget({
                 layout_manager: new Clutter.BinLayout(),
@@ -72,6 +69,22 @@ let WorkspaceIndicator = GObject.registerClass(
     }
 );
 
+class Extension {
+    constructor(uuid) {
+        this._uuid = uuid;
+    }
+
+    enable() {
+        this._indicator = new WorkspaceIndicator();
+        Main.panel.addToStatusArea(this._uuid, this._indicator);
+    }
+
+    disable() {
+        this._indicator.destroy();
+        this._indicator = null;
+    }
+}
+
 function getWidgetText() {
     let txt = "";
     let numberWorkspaces = global.workspace_manager.get_n_workspaces();
@@ -86,14 +99,6 @@ function getWidgetText() {
     return txt
 }
 
-function init() {
-}
-
-function enable() {
-    _indicator = new WorkspaceIndicator();
-    Main.panel.addToStatusArea('workspace-indicator', _indicator);
-}
-
-function disable() {
-    _indicator.destroy();
+function init(meta) {
+    return new Extension(meta.uuid);
 }
