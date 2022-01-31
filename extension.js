@@ -7,8 +7,6 @@ const circle = "○";
 const leftButton = 1;
 const rightButton = 3;
 
-let _indicator;
-
 let WorkspaceIndicator = GObject.registerClass(
     class WorkspaceIndicator extends PanelMenu.Button {
         _init() {
