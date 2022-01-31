@@ -2,9 +2,6 @@ const { Clutter, St, GObject } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 
-const Me = ExtensionUtils.getCurrenExtension();
-
-
 const bullet = "●";
 const circle = "○";
 const leftButton = 1;
