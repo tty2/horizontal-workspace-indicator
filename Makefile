@@ -1,16 +1,15 @@
-##@ Test
-lint: ## Run linters only.
-	@echo -e "\033[2m→ Run linters...\033[0m"
-
-test: ## Run go tests for files with tests.
-	@echo -e "\033[2m→ Run tests for all files...\033[0m"
-
-check: lint test ## Run full check: lint and test.
-
 ##@ Deploy
-zip: ## Make zip file for deploy to https://extensions.gnome.org/upload/.
+zip: compile-schemas ## Make zip file for deploy to https://extensions.gnome.org/upload/.
 	@echo -e "\033[2m→ Making zip file...\033[0m"
-	zip horizontal-workspace-indicatortty2.io.zip metadata.json extension.js stylesheet.css LICENSE
+	zip horizontal-workspace-indicatortty2.io.zip metadata.json extension.js stylesheet.css LICENSE \
+		schemas/gschemas.compiled \
+		schemas/org.gnome.shell.extensions.nothing-to-say.gschema.xml
+
+compile-schemas: ## Compile all in schemas folder
+	glib-compile-schemas --strict schemas/
+
+install: ## Copy to extensions directory for debug.
+	cp -r * ~/.local/share/gnome-shell/extensions/horizontal-workspace-indicator@tty2.io
 
 ##@ Other
 #------------------------------------------------------------------------------
@@ -19,4 +18,4 @@ help:  ## Display help
 #------------- <https://suva.sh/posts/well-documented-makefiles> --------------
 
 .DEFAULT_GOAL := help
-.PHONY: help lint test check build install run
+.PHONY: help zip compile-schemas install
