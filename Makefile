@@ -8,7 +8,7 @@ zip: compile-schemas ## Make zip file for deploy to https://extensions.gnome.org
 compile-schemas: ## Compile all in schemas folder
 	glib-compile-schemas --strict schemas/
 
-install: ## Copy to extensions directory for debug.
+install: compile-schemas ## Copy to extensions directory for debug.
 	cp -r * ~/.local/share/gnome-shell/extensions/horizontal-workspace-indicator@tty2.io
 
 ##@ Other
