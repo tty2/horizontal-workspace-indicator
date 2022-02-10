@@ -21,21 +21,28 @@ function buildPrefsWidget() {
         visible: true,
     });
 
-    // Add a simple title and add it to the prefsWidget
     let title = new Gtk.Label({
         label: `<b>Preferences</b>`,
-        halign: Gtk.Align.START,
+        halign: Gtk.Align.CENTER,
         use_markup: true,
         visible: true
     });
     prefsWidget.attach(title, 0, 0, 2, 1);
+
+    let note = new Gtk.Label({
+        label: `After any changes turn the extension off and on again.`,
+        halign: Gtk.Align.CENTER,
+        use_markup: true,
+        visible: true
+    });
+    prefsWidget.attach(note, 0, 1, 2, 1);
 
     const widgetPositionLabel = new Gtk.Label({
         label: "Widget position",
         halign: Gtk.Align.START,
         visible: true,
     });
-    prefsWidget.attach(widgetPositionLabel, 0, 1, 1, 1);
+    prefsWidget.attach(widgetPositionLabel, 0, 2, 1, 1);
 
     const widgetPositionComboBox = new Gtk.ComboBoxText();
     widgetPositionComboBox.append("right", "Right corner | Status area");
@@ -47,7 +54,7 @@ function buildPrefsWidget() {
         "active-id",
         Gio.SettingsBindFlags.DEFAULT
     );
-    prefsWidget.attach(widgetPositionComboBox, 1, 1, 1, 1);
+    prefsWidget.attach(widgetPositionComboBox, 1, 2, 1, 1);
 
     return prefsWidget;
 }
