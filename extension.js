@@ -44,7 +44,7 @@ let WorkspaceIndicator = GObject.registerClass(
         destroy() {
             for (let i = 0; i < this._workspaceManagerSignals.length; i++)
                 global.workspace_manager.disconnect(this._workspaceManagerSignals[i])
-            super._onDestroy();
+            super.destroy();
         }
 
         _updateView() {
