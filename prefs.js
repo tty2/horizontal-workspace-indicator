@@ -12,7 +12,10 @@ function buildPrefsWidget() {
     this.settings = ExtensionUtils.getSettings();
 
     const prefsWidget = new Gtk.Grid({
-        // margin: 18,
+        margin_top: 20,
+        margin_bottom: 20,
+        margin_start: 20,
+        margin_end: 20,
         column_spacing: 12,
         row_spacing: 12,
         visible: true,
