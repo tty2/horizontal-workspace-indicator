@@ -2,6 +2,8 @@ const { Clutter, St, GObject } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 
+const ExtensionUtils = imports.misc.extensionUtils;
+
 const bullet = "●";
 const circle = "○";
 const leftButton = 1;
@@ -39,10 +41,10 @@ let WorkspaceIndicator = GObject.registerClass(
             this.connect('button-press-event', this._onButtonPress);
         }
 
-        _onDestroy() {
+        destroy() {
             for (let i = 0; i < this._workspaceManagerSignals.length; i++)
                 global.workspace_manager.disconnect(this._workspaceManagerSignals[i])
-            super._onDestroy();
+            super.destroy();
         }
 
         _updateView() {
@@ -71,18 +73,29 @@ let WorkspaceIndicator = GObject.registerClass(
 
 class Extension {
     constructor(uuid) {
+        this._indicator = null;
         this._uuid = uuid;
+        this.settings = ExtensionUtils.getSettings();
     }
 
     enable() {
         this._indicator = new WorkspaceIndicator();
-        Main.panel.addToStatusArea(this._uuid, this._indicator);
+        let widgetPosition = this.settings.get_value("widget-position").unpack();
+        Main.panel.addToStatusArea(this._uuid, this._indicator, getWidgetIndex(widgetPosition), widgetPosition);
     }
 
     disable() {
         this._indicator.destroy();
         this._indicator = null;
     }
+}
+
+function getWidgetIndex(position) {
+    if (position === "right") {
+        return 0
+    } 
+
+    return 1
 }
 
 function getWidgetText() {

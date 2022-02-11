@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.horizontal-workspace-indicator" path="/org/gnome/shell/extensions/horizontal-workspace-indicator/">
+    <key name="widget-position" type="s">
+      <choices>
+        <choice value="right"/>
+        <choice value="center"/>
+        <choice value="left"/>
+      </choices>
+      <default>'right'</default>
+      <summary>Widget position</summary>
+      <description>This specifies the position of widget on the left, center or right of top panel.</description>
+    </key>
+  </schema>
+</schemalist>
