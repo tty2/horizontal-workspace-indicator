@@ -4,7 +4,7 @@ zip: compile-schemas ## Make zip file for deploy to https://extensions.gnome.org
 	zip horizontal-workspace-indicatortty2.io.zip metadata.json extension.js stylesheet.css prefs.js \
 		LICENSE \
 		schemas/gschemas.compiled \
-		schemas/org.gnome.shell.extensions.nothing-to-say.gschema.xml
+		schemas/org.gnome.shell.extensions.horizontal-workspace-indicator.gschema.xml
 
 compile-schemas: ## Compile all in schemas folder
 	glib-compile-schemas --strict schemas/
