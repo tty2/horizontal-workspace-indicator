@@ -1,7 +1,8 @@
 ##@ Deploy
 zip: compile-schemas ## Make zip file for deploy to https://extensions.gnome.org/upload/.
 	@echo -e "\033[2m→ Making zip file...\033[0m"
-	zip horizontal-workspace-indicatortty2.io.zip metadata.json extension.js stylesheet.css LICENSE \
+	zip horizontal-workspace-indicatortty2.io.zip metadata.json extension.js stylesheet.css prefs.js \
+		LICENSE \
 		schemas/gschemas.compiled \
 		schemas/org.gnome.shell.extensions.nothing-to-say.gschema.xml
 
