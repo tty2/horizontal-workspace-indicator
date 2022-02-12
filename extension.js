@@ -73,20 +73,20 @@ let WorkspaceIndicator = GObject.registerClass(
 
 class Extension {
     constructor(uuid) {
-        this._indicator = null;
         this._uuid = uuid;
-        this.settings = ExtensionUtils.getSettings();
     }
-
+    
     enable() {
         this._indicator = new WorkspaceIndicator();
-        let widgetPosition = this.settings.get_value("widget-position").unpack();
+        this._settings = ExtensionUtils.getSettings();
+        let widgetPosition = this._settings.get_value("widget-position").unpack();
         Main.panel.addToStatusArea(this._uuid, this._indicator, getWidgetIndex(widgetPosition), widgetPosition);
     }
 
     disable() {
         this._indicator.destroy();
         this._indicator = null;
+        this._settings = null;
     }
 }
 
