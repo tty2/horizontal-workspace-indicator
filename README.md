@@ -3,7 +3,7 @@
 
 
 Horizontal workspace indicator shows the amount of opened workspaces and highlights the current one using unicode characters.
-You can use it as an indicator only but widget is clickable. Left button click: move to left, right click: move right.
+You can use it as an indicator only but widget is clickable. Left button click: move to left, right click: move right. Middle click calls overview.
 
 ## Compatibility
 
