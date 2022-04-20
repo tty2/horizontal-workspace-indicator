@@ -7,6 +7,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const bullet = "●";
 const circle = "○";
 const leftButton = 1;
+const middleButton = 2;
 const rightButton = 3;
 
 let WorkspaceIndicator = GObject.registerClass(
@@ -66,6 +67,12 @@ let WorkspaceIndicator = GObject.registerClass(
                     return
                 }
                 Main.wm.actionMoveWorkspace(workspaceManager.get_workspace_by_index(activeWorkspaceIndex+1));
+            } else if (button == middleButton) {
+                if (Main.overview.visible) {
+                    Main.overview.hide();
+                } else {
+                    Main.overview.show();
+                }
             }
         }
     }
