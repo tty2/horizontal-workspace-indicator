@@ -28,6 +28,6 @@ Review
 
 ## Known issues
 
-1. If your indicator looks different from one on screen shot, install DejaVu Sans, Ubuntu font.
+1. If your indicator looks different from one on screen shot, install DejaVu Sans or Ubuntu font.
 
 2. There could be an error with the extension after update. The solution is to logout and login again.
