@@ -22,9 +22,6 @@ Screenshot with the same situation:
 
 Three dots on the left side of the top bar.
 
-Review
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/gd8K0kAOMlA/0.jpg)](https://www.youtube.com/watch?v=gd8K0kAOMlA)
 
 ## Known issues
 
