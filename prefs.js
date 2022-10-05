@@ -57,5 +57,23 @@ function buildPrefsWidget() {
     );
     prefsWidget.attach(widgetPositionComboBox, 1, 2, 1, 1);
 
+    const widgetOrientationLabel = new Gtk.Label({
+        label: "Widget orientation",
+        halign: Gtk.Align.START,
+        visible: true,
+    });
+    prefsWidget.attach(widgetOrientationLabel, 0, 3, 1, 1);
+
+    const widgetOrientationComboBox = new Gtk.ComboBoxText();
+    widgetOrientationComboBox.append("horizontal", "Horizontal");
+    widgetOrientationComboBox.append("vertical", "Vertical");
+    this.settings.bind(
+        "widget-orientation",
+        widgetOrientationComboBox,
+        "active-id",
+        Gio.SettingsBindFlags.DEFAULT
+    );
+    prefsWidget.attach(widgetOrientationComboBox, 1, 3, 1, 1);
+
     return prefsWidget;
 }
