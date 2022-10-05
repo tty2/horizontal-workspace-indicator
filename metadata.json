@@ -5,5 +5,5 @@
     "shell-version": ["40", "41", "42", "43"],
     "url": "https://github.com/tty2/horizontal-workspace-indicator",
     "uuid": "horizontal-workspace-indicator@tty2.io",
-    "version": "0.2.2"
+    "version": "0.3.0"
 }
