@@ -87,26 +87,15 @@ let WorkspaceIndicator = GObject.registerClass(
         }
 
         getWidgetText() {
-            let txt = "";
+            let items = [];
             let numberWorkspaces = global.workspace_manager.get_n_workspaces();
             let currentWorkspaceIndex = global.workspace_manager.get_active_workspace_index();
-            let separator;
-
-            if (this.isHorizontal()) {
-                separator = "";
-            } else {
-                separator = "\n";
-            }
+            let separator = this.isHorizontal() ? "" : "\n";
 
             for (let i = 0; i < numberWorkspaces; i++) {
-                if (i == currentWorkspaceIndex) {
-                    txt += bullet;
-                } else {
-                    txt += circle;
-                }
-                txt += separator;
+                items.push(i == currentWorkspaceIndex ? bullet : circle);
             }
-            return txt
+            return items.join(separator)
         }
     }
 );
