@@ -4,8 +4,17 @@ const PanelMenu = imports.ui.panelMenu;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 
-const bullet = "●";
-const circle = "○";
+const symbolsMap = {
+    circles: {
+        active: "●",
+        inactive: "○"
+    },
+    lines: {
+        active: "┃",
+        inactive: "ǀ"
+    }
+}
+
 const leftButton = 1;
 const middleButton = 2;
 const rightButton = 3;
@@ -44,6 +53,19 @@ let WorkspaceIndicator = GObject.registerClass(
             ];
 
             this.connect('button-press-event', this._onButtonPress);
+        }
+
+        _setIcons() {
+            // get style from preferences
+            switch ("test") {
+                case "lines":
+                    this._icons.active = symbolsMap.lines.active
+                    this._icons.inactive = symbolsMap.lines.inactive
+                    break;
+                default:
+                    this._icons.active = symbolsMap.circles.active
+                    this._icons.inactive = symbolsMap.circles.inactive
+            }
         }
 
         destroy() {
@@ -93,7 +115,7 @@ let WorkspaceIndicator = GObject.registerClass(
             let separator = this.isHorizontal() ? "" : "\n";
 
             for (let i = 0; i < numberWorkspaces; i++) {
-                items.push(i == currentWorkspaceIndex ? bullet : circle);
+                items.push(i == currentWorkspaceIndex ? this._icons.active : this._icons.inactive);
             }
             return items.join(separator)
         }
