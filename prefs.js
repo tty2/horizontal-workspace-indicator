@@ -75,5 +75,23 @@ function buildPrefsWidget() {
     );
     prefsWidget.attach(widgetOrientationComboBox, 1, 3, 1, 1);
 
+    const styleLabel = new Gtk.Label({
+        label: "Icons Style",
+        halign: Gtk.Align.START,
+        visible: true,
+    });
+    prefsWidget.attach(styleLabel, 0, 4, 1, 1);
+
+    const styleComboBox = new Gtk.ComboBoxText();
+    styleComboBox.append("circles", "Circles");
+    styleComboBox.append("lines", "Lines");
+    this.settings.bind(
+        "icons-style",
+        styleComboBox,
+        "active-id",
+        Gio.SettingsBindFlags.DEFAULT
+    );
+    prefsWidget.attach(styleComboBox, 1, 4, 1, 1);
+
     return prefsWidget;
 }
