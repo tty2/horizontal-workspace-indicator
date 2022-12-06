@@ -26,7 +26,6 @@ let WorkspaceIndicator = GObject.registerClass(
 
             this._settings = ExtensionUtils.getSettings();
 
-            this._icons = {}
             this._setIcons();
             
             this._container = new St.Widget({
@@ -61,18 +60,24 @@ let WorkspaceIndicator = GObject.registerClass(
         }
 
         _setIcons() {
-            let iconStyle = this._settings.get_string("icons-style");
-            switch (iconStyle) {
+            this._icons = {};
+
+            switch (this._settings.get_string("icons-style")) {
                 case "lines":
-                    this._icons.active = symbolsMap.lines.active
-                    this._icons.inactive = symbolsMap.lines.inactive
+                    this._icons.active = symbolsMap.lines.active;
+                    this._icons.inactive = symbolsMap.lines.inactive;
                     break;
                 default:
-                    this._icons.active = symbolsMap.circles.active
-                    this._icons.inactive = symbolsMap.circles.inactive
+                    this._icons.active = symbolsMap.circles.active;
+                    this._icons.inactive = symbolsMap.circles.inactive;
             }
 
-            this._icons.separator = this.isHorizontal() ? "" : "\n";
+            switch (this._settings.get_string("widget-orientation")) {
+                case "vertical":
+                    this._icons.separator = "\n";
+                default:
+                    this._icons.separator = "";
+            }
         }
 
         destroy() {
@@ -107,10 +112,6 @@ let WorkspaceIndicator = GObject.registerClass(
                     Main.overview.show();
                 }
             }
-        }
-
-        isHorizontal() {
-            return this._settings.get_string("widget-orientation") != 'vertical';
         }
 
         getWidgetText() {
