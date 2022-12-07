@@ -4,8 +4,17 @@ const PanelMenu = imports.ui.panelMenu;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 
-const bullet = "●";
-const circle = "○";
+const symbolsMap = {
+    circles: {
+        active: "●",
+        inactive: "○"
+    },
+    lines: {
+        active: "┃",
+        inactive: "ǀ"
+    }
+}
+
 const leftButton = 1;
 const middleButton = 2;
 const rightButton = 3;
@@ -14,6 +23,10 @@ let WorkspaceIndicator = GObject.registerClass(
     class WorkspaceIndicator extends PanelMenu.Button {
         _init() {
             super._init(0.0, _('Horizontal workspace indicator'));
+
+            this._settings = ExtensionUtils.getSettings();
+
+            this._setIcons();
             
             this._container = new St.Widget({
                 layout_manager: new Clutter.BinLayout(),
@@ -46,6 +59,27 @@ let WorkspaceIndicator = GObject.registerClass(
             this.connect('button-press-event', this._onButtonPress);
         }
 
+        _setIcons() {
+            this._icons = {};
+
+            switch (this._settings.get_string("icons-style")) {
+                case "lines":
+                    this._icons.active = symbolsMap.lines.active;
+                    this._icons.inactive = symbolsMap.lines.inactive;
+                    break;
+                default:
+                    this._icons.active = symbolsMap.circles.active;
+                    this._icons.inactive = symbolsMap.circles.inactive;
+            }
+
+            switch (this._settings.get_string("widget-orientation")) {
+                case "vertical":
+                    this._icons.separator = "\n";
+                default:
+                    this._icons.separator = "";
+            }
+        }
+
         destroy() {
             for (let i = 0; i < this._workspaceManagerSignals.length; i++)
                 global.workspace_manager.disconnect(this._workspaceManagerSignals[i])
@@ -56,7 +90,7 @@ let WorkspaceIndicator = GObject.registerClass(
             this._statusLabel.text = this.getWidgetText();
         }
 
-        _onButtonPress(actor, event) {
+        _onButtonPress(_, event) {
             let workspaceManager = global.workspace_manager;
             let activeWorkspaceIndex = workspaceManager.get_active_workspace_index();
             let button = event.get_button();
@@ -80,22 +114,15 @@ let WorkspaceIndicator = GObject.registerClass(
             }
         }
 
-        isHorizontal() {
-            let settings = ExtensionUtils.getSettings();
-            let orientation = settings.get_string("widget-orientation");
-            return orientation != 'vertical';
-        }
-
         getWidgetText() {
             let items = [];
             let numberWorkspaces = global.workspace_manager.get_n_workspaces();
             let currentWorkspaceIndex = global.workspace_manager.get_active_workspace_index();
-            let separator = this.isHorizontal() ? "" : "\n";
 
             for (let i = 0; i < numberWorkspaces; i++) {
-                items.push(i == currentWorkspaceIndex ? bullet : circle);
+                items.push(i == currentWorkspaceIndex ? this._icons.active : this._icons.inactive);
             }
-            return items.join(separator)
+            return items.join(this._icons.separator)
         }
     }
 );
@@ -107,15 +134,13 @@ class Extension {
     
     enable() {
         this._indicator = new WorkspaceIndicator();
-        this._settings = ExtensionUtils.getSettings();
-        let widgetPosition = this._settings.get_value("widget-position").unpack();
+        let widgetPosition = this._indicator._settings.get_value("widget-position").unpack();
         Main.panel.addToStatusArea(this._uuid, this._indicator, getWidgetIndex(widgetPosition), widgetPosition);
     }
 
     disable() {
         this._indicator.destroy();
         this._indicator = null;
-        this._settings = null;
     }
 }
 

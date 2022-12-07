@@ -20,5 +20,14 @@
       <summary>Widget orientation</summary>
       <description>This specifies the orientation of the dots in the widget, horizontal or vertical (for vertical panels).</description>
     </key>
+    <key name="icons-style" type="s">
+      <choices>
+        <choice value="circles"/>
+        <choice value="lines"/>
+      </choices>
+      <default>'circles'</default>
+      <summary>Icons style</summary>
+      <description>This specifies icons style.</description>
+    </key>
   </schema>
 </schemalist>
