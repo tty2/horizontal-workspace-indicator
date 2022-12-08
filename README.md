@@ -12,9 +12,15 @@ This extension is written for Wayland.
 
 ## How it looks like
 
-Example with three opened workspaces where the first one is current:
+Example with for opened workspaces where the second one is current:
 
-    ●○○
+Circle symbols:
+
+    ○●○○
+
+Line symbols:
+
+    ǀ┃ǀǀ
 
 Screenshot with the same situation:
 

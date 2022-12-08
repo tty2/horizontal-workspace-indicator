@@ -75,6 +75,7 @@ let WorkspaceIndicator = GObject.registerClass(
             switch (this._settings.get_string("widget-orientation")) {
                 case "vertical":
                     this._icons.separator = "\n";
+                    break;
                 default:
                     this._icons.separator = "";
             }
