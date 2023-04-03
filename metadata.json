@@ -2,8 +2,8 @@
     "description": "Workspace indicator shows the amount of opened workspaces and the current one",
     "name": "Workspace indicator",
     "settings-schema": "org.gnome.shell.extensions.horizontal-workspace-indicator",
-    "shell-version": ["40", "41", "42", "43"],
+    "shell-version": ["40", "41", "42", "43", "44"],
     "url": "https://github.com/tty2/horizontal-workspace-indicator",
     "uuid": "horizontal-workspace-indicator@tty2.io",
-    "version": "0.4.0"
+    "version": "0.4.1"
 }
