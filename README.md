@@ -1,3 +1,5 @@
+With gnome 45 the gnome community get a new awesome builtin workspace switcher. This extension does not have any reason to exist.
+
 # Workspace indicator 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" height="100" align="right">](https://extensions.gnome.org/extension/3952/workspace-indicator/)
 
